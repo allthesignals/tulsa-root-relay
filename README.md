@@ -1,3 +1,11 @@
+# Tulsa Root Relay
+
+nightly pulls of [Root Tulsa](https://roottulsa.com)
+
+[see rendered map](https://github.com/allthesignals/tulsa-root-relay/blob/master/data/upcoming.geojson)
+
+click the pin on the map to see a link
+
 # gh-action-data-scraping
 
 this repo shows how to use github actions to do automated data scraping, with storage in git itself! **free git storage and scheduled updates!!!**

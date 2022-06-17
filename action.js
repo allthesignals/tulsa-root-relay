@@ -39,7 +39,10 @@ function jsonToGeoJson(json) {
       .map(row => {
         return {
           type: 'Feature',
-          properties: row,
+          properties: {
+            link: `https://roottulsa.com/events/event/${row.EventModuleId}`,
+            ...row
+          },
           geometry: {
             type: 'Point',
             coordinates: [
