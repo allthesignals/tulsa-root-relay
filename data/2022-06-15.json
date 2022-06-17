@@ -1,0 +1,34 @@
+[
+  {
+    "firstName": "Harry",
+    "lastName": "Kelley",
+    "email": "harry.kelley@example.com",
+    "username": "goldenlion271",
+    "password": "simple",
+    "invokedAt": "2022-06-15T00:30:37.706Z"
+  },
+  {
+    "firstName": "Bernice",
+    "lastName": "Parker",
+    "email": "bernice.parker@example.com",
+    "username": "yellowfish584",
+    "password": "nimbus",
+    "invokedAt": "2022-06-15T02:59:56.903Z"
+  },
+  {
+    "firstName": "Bruno",
+    "lastName": "Rosenlund",
+    "email": "bruno.rosenlund@example.com",
+    "username": "blacktiger174",
+    "password": "speakers",
+    "invokedAt": "2022-06-15T03:55:57.473Z"
+  },
+  {
+    "firstName": "Susana",
+    "lastName": "Lemoine",
+    "email": "susana.lemoine@example.com",
+    "username": "bigwolf117",
+    "password": "speedo",
+    "invokedAt": "2022-06-15T04:22:29.109Z"
+  }
+]
