@@ -1,7 +1,7 @@
 
 on:
   schedule:
-    - cron:  '0 * * * *' # Every hour. Ref https://crontab.guru/examples.html
+    - cron:  '0 0 * * *' # Nightly. Ref https://crontab.guru/examples.html
 name: Scrape Data
 jobs:
   build:
@@ -10,9 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build
-      run: npm install
+      run: yarn install
     - name: Scrape
-      run: npm run action 
+      run: yarn run action 
       # env:
       #   WHATEVER_TOKEN: ${{ secrets.YOU_WANT }}
     - uses: mikeal/publish-to-github-action@master

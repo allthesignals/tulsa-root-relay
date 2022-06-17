@@ -2,46 +2,52 @@
 
 const fs = require('fs');
 const path = require('path');
-const randomUser = require('random-user');
+const axios = require('axios');
+
+const URL = {
+  domain: 'https://api.azure.sitewrench.com',
+  path: '/pageparts/calendars/302440/events-for-map',
+  token: 'fe7f339a8875507c82276d692c363448f0053b99',
+  siteId: '2552',
+}
+const endpoint = `${URL.domain}${URL.path}?token=${URL.token}&siteId=${URL.siteId}`;
 
 // for you to change easily
 const dataFolder = '/data';
-const now = new Date();
-const pathToData = path.join(__dirname, dataFolder, fileString(now)) + '.json';
-
-// read data, if needed
-let data = [];
-if (fs.existsSync(pathToData)) {
-  data = JSON.parse(fs.readFileSync(pathToData));
-}
+const pathToData = (ext = '.json') => path.join(__dirname, dataFolder, 'upcoming') + ext;
 
 // scrape data, possibly using prior data
 async function getData() {
-  const user = await randomUser('simple');
-  user.invokedAt = now;
-  data.push(user);
+  const { data } = await axios(endpoint);
+
+  return data;
 }
 
 // execute and persist data
 getData() // no top level await... yet
-  .then(() => {
+  .then((data) => {
     // persist data
-    fs.writeFileSync(path.resolve(pathToData), JSON.stringify(data, null, 2));
+    fs.writeFileSync(path.resolve(pathToData('.json')), JSON.stringify(data, null, 2));
+    fs.writeFileSync(path.resolve(pathToData('.geojson')), JSON.stringify(jsonToGeoJson(data)));
   });
 
-/**
- *
- * utils
- *
- */
-function fileString(ts) {
-  const year = ts.getUTCFullYear();
-  const month = (ts.getUTCMonth() + 1).toString().padStart(2, '0');
-  const day = ts
-    .getUTCDate()
-    .toString()
-    .toString()
-    .padStart(2, '0');
-  const name = `${year}-${month}-${day}`;
-  return name;
+function jsonToGeoJson(json) {
+  return  {
+    type: 'FeatureCollection',
+    features: json
+      .filter(row => !!(row.Latitude && row.Longitude))
+      .map(row => {
+        return {
+          type: 'Feature',
+          properties: row,
+          geometry: {
+            type: 'Point',
+            coordinates: [
+              row.Longitude,
+              row.Latitude,
+            ],
+          },
+        }
+      })
+  }
 }
